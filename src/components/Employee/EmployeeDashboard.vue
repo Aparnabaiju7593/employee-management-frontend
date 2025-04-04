@@ -46,7 +46,10 @@ export default {
       navItems: [
         { text: 'Tasks', route: '/tasks' },
         { text: 'Leave Requests', route: '/lerequest' },
-        { text:'Late Requests', route:'/larequest'}
+        { text:'Late Requests', route:'/larequest'},
+        { text: 'Resource Request',route: '/reqresource'}
+
+        
       ]
     };
   },

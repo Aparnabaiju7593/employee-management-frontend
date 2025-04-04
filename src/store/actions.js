@@ -1,4 +1,5 @@
 // import ForgotPassword from "@/components/ForgotPassword.vue";
+// import ResourceRequest from "@/components/Employee/ResourceRequest.vue";
 import axios from "axios"
 export default{
     async login({commit, rootGetters},payload){
@@ -21,6 +22,7 @@ export default{
             console.error("Login Error:", error);
           }
     },
+    //get all late request
     async late({rootGetters}){
         const res = await axios.get(`${rootGetters.getUrl}``api/departmentadetails/getAllLateDto`);
         if(res.status >= 200 || res.status <300){
@@ -30,6 +32,8 @@ export default{
             
         }
     },
+
+    //get all resources
     async resource({rootGetters}){
         const res = await axios.get(`${rootGetters.getUrl}``api/departmentadetails/getResources`);
         if(res.status >= 200 || res.status <300){
@@ -39,7 +43,7 @@ export default{
             
         }
     },
-
+        //get all leave request
     async leave({rootGetters}){
         const res = await axios.get(`${rootGetters.getUrl}``api/departmentadetails/getLeaveDto`);
         if(res.status >= 200 || res.status <300){
@@ -50,6 +54,8 @@ export default{
         }
     },
 
+    //list department
+
     async department({rootGetters}){
         const res = await axios.get(`${rootGetters.getUrl}``api/departmentadetails/listdepartment`);
         if(res.status >= 200 || res.status <300){
@@ -59,7 +65,7 @@ export default{
             
         }
     },
-
+      //get all task
     async task({rootGetters}){
         const res = await axios.get(`${rootGetters.getUrl}``api/departmentadetails/getTaskDto`);
         if(res.status >= 200 || res.status <300){
@@ -69,7 +75,7 @@ export default{
             
         }
     },
-    
+    //get employee task
     async taskForm({rootGetters}){
         const res = await axios.get(`${rootGetters.getUrl}``api/EmployeeDetails/getEmployeeTask`);
         if(res.status >= 200 || res.status <300){
@@ -103,7 +109,11 @@ async allDep({ rootGetters }) {
     }
   }
   ,
+
+
   //view roles
+
+
   async roles({ rootGetters }) {
     try {
       const baseUrl = rootGetters.getUrl; 
@@ -126,8 +136,42 @@ async allDep({ rootGetters }) {
     }
   }
   ,
+//employee add resources
+  async reqResource({rootGetters},payload){
+    const baseUrl = rootGetters.getUrl; 
+    const res = await axios.post(`${baseUrl}/api/EmployeeDetails/reqResource`,payload);
+    if(res.status >= 200 || res.status <300){
+        console.log(res);
+        
+        return res;
+        
+    }
+},
 
+//list resources
 
+async allRes({ rootGetters }) {
+  try {
+    const baseUrl = rootGetters.getUrl; 
+    if (!baseUrl) {
+      throw new Error("Base URL is undefined. Check Vuex state.");
+    }
+    
+    const res = await axios.get(`${baseUrl}/api/AdminDetails/getAllResources`);
+
+    if (res.status >= 200 && res.status < 300) {
+      return { success: true, data: res.data };
+    } else {
+      return { success: false, message: "Failed to fetch resources." };
+    }
+  } catch (error) {
+    console.error("Error fetching resources list:", error);
+    return { success: false, message: error.message };
+  }
+}
+,
+
+    //forgot password
 
     async ForgotPassword ({commit,rootGetters}){
         const res =await axios.put(`${rootGetters.getUrl}/api/AdminDetails/updatepassword`);
@@ -139,7 +183,7 @@ async allDep({ rootGetters }) {
     },
    
 
-
+    // localhost:8085/api/EmployeeDetails/reqResource
 
 //demo
 //     async fetchEmployee({commit, rootGetters}){

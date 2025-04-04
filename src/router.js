@@ -20,6 +20,7 @@ const routes = [
       { path:'/late' ,component: () => import('./components/LatePage.vue'),name:'late'},
       { path:'/leave' ,component: () => import('./components/LeavePage.vue'),name:'leave'},
       { path:'/department' ,component: () => import('./components/DepartmentPage.vue'),name:'department'},
+      // { path:'/resourcereq' ,component: () => import('@/components/RequestResource.vue'),name:'resourcereq'},
   
     ],
   },
@@ -30,14 +31,10 @@ const routes = [
      
       { path: '/lerequest', component: () => import('@/components/Employee/LeaveRequest.vue'), name: 'lerequest' },
       { path: '/larequest', component: () => import('@/components/Employee/LateRequest.vue'), name: 'larequest' },
+      { path: '/reqresource', component: () => import('@/components/Employee/ResourceRequest.vue'), name: 'reqresource' }
       
 
-      // { path:'/task', component: () => import('./components/TaskPage.vue'), name:'task'},
-      // { path:'/resource', component: () => import('./components/ResourcePage.vue'), name:'resource'},
-      // { path:'/late' ,component: () => import('./components/LatePage.vue'),name:'late'},
-      // { path:'/leave' ,component: () => import('./components/LeavePage.vue'),name:'leave'},
-      // { path:'/department' ,component: () => import('./components/DepartmentPage.vue'),name:'department'},
-  
+     
     ],
   },
 ];
