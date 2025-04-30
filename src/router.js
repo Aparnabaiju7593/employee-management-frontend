@@ -14,8 +14,10 @@ const routes = [
   {path: "/dash",
     component: UserDashboard,
     children: [
-      { path: '/home', component: () => import('./components/UserHome.vue'), name: 'user-home' },
+      {path:'',redirect:'task'},
+      // { path: '/home', component: () => import('./components/UserHome.vue'), name: 'user-home' },
       { path:'/task', component: () => import('./components/TaskPage.vue'), name:'task'},
+      { path: '/requestres', component: () => import('@/components/Admin/RequestResource.vue'), name: 'Request-resouces' },
       { path:'/resource', component: () => import('./components/ResourcePage.vue'), name:'resource'},
       { path:'/late' ,component: () => import('./components/LatePage.vue'),name:'late'},
       { path:'/leave' ,component: () => import('./components/LeavePage.vue'),name:'leave'},
@@ -27,6 +29,7 @@ const routes = [
   {path: "/employeedash",
     component: EmployeeDashboard,
     children: [
+      {path:'',redirect:'/tasks'},
      { path:'/tasks',component:() =>import('./components/Employee/TaskForm.vue'), name:'tasks'},
      
       { path: '/lerequest', component: () => import('@/components/Employee/LeaveRequest.vue'), name: 'lerequest' },

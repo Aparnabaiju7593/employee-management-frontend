@@ -1,6 +1,7 @@
 <template>
+  <v-main>
   <div class="p-6">
-    <h1 class="text-2xl font-semibold mb-4">Leave Requests</h1>
+    <!-- <h1 class="text-2xl font-semibold mb-4">Leave Requests</h1> -->
     <table class="w-full border-collapse border border-gray-300">
       <thead>
         <tr class="bg-gray-200">
@@ -24,6 +25,7 @@
       </tbody>
     </table>
   </div>
+</v-main>
 </template>
 
 <script>

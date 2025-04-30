@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="p-6 bg-gray-100 min-h-screen">
     <h2 class="mb-4">Task Management</h2>
 
@@ -65,4 +65,4 @@ export default {
     },
   },
 };
-</script>
+</script> -->

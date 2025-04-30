@@ -1,8 +1,10 @@
 <template>
-  <div class="container mt-4" style="background-color: #f4f6f9; padding: 30px; border-radius: 8px;">
+ <v-main>
+
+  <div class="container mt-4" style="background-color: #f4f6f9; margin-left: 50px; padding: 30px; border-radius: 8px;">
     <h2 class="text-center" style="color: #343a40; font-family: 'Arial', sans-serif; font-weight: 600;">Office Resources</h2>
     <div class="row">
-      <div class="col-md-4 mb-4" v-for="resource in resources" :key="resource.resource_id">
+      <div class="col-md-4 mb-4 " v-for="resource in resources" :key="resource.resource_id">
         <div class="card shadow-lg" style="background-color: #ffffff; border-radius: 12px; border: none; transition: transform 0.3s ease-in-out;">
           <div class="card-body" style="padding: 25px; text-align: center;">
             <h5 class="card-title" style="color: #212529; font-family: 'Arial', sans-serif; font-weight: 600;">{{ resource.resource }}</h5>
@@ -13,6 +15,9 @@
       </div>
     </div>
   </div>
+
+</v-main>
+
 </template>
 
 <script>
@@ -23,13 +28,7 @@ export default {
     return {
       fetched : false,
       resources: [
-        // { resource_id: 1, quantity: 48, resource: 'pappers' },
-        // { resource_id: 4, quantity: 138, resource: 'pappers' },
-        // { resource_id: 5, quantity: 38, resource: 'printer' },
-        // { resource_id: 6, quantity: 68, resource: 'desk' },
-        // { resource_id: 3, quantity: 30, resource: 'software' },
-        // { resource_id: 7, quantity: 15, resource: 'chair' },
-        // { resource_id: 2, quantity: 37, resource: 'laptop' }
+       
       ]
     }; 
   },

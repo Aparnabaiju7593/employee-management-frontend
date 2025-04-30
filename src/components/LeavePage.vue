@@ -1,8 +1,7 @@
 <template>
+  <v-main>
     <div class="container">
-      <br>
-      <br>
-      <br>
+      
       <h2 class="title">Leave Requests</h2>
       <table class="leave-table">
         <thead>
@@ -32,6 +31,7 @@
         </tbody>
       </table>
     </div>
+  </v-main>
   </template>
   
   <script>
@@ -41,10 +41,6 @@ import axios from 'axios';
     data() {
       return {
         leaveRequests: [
-          // { leave_id: 1, employee_id: 2, start_date: "2025-02-22", end_date: "2025-02-26", reason: "housewarming", status_id: 1 },
-          // { leave_id: 2, employee_id: 4, start_date: "2025-01-05", end_date: "2025-01-09", reason: "fever", status_id: 1 },
-          // { leave_id: 3, employee_id: 1, start_date: "2025-02-05", end_date: "2025-02-09", reason: "fever", status_id: 1 },
-          // { leave_id: 4, employee_id: 5, start_date: "2025-02-05", end_date: "2025-02-09", reason: "fever", status_id: 1 }
         ]
       };
     },

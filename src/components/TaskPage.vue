@@ -1,9 +1,8 @@
 <template>
+  <v-main>
   <div class="p-6 bg-gray-100 min-h-screen">
     <div class="overflow-x-auto bg-white shadow-md rounded-lg p-4">
-    <br>
-    <br>
-    <br>
+  
       <!-- <h2 class="text-xl font-semibold mb-4">Task Management</h2> -->
       <table class="min-w-full border-collapse border border-gray-300">
         <thead>
@@ -31,6 +30,7 @@
       </table>
     </div>
   </div>
+</v-main>
 </template>
 
 <script>
@@ -53,10 +53,8 @@ export default {
         { key: 'status_id', label: 'Status' },
       ],
       tasks: [
-        // { task_id: 4, complete_tym: '', department_id: 4, description: 'hvydtrd', employee_id: 4, progress_tym: '', start_date: '2025-03-05T11:36:04.897107', status_id: 3, task_name: 'task4' },
-        // { task_id: 1, complete_tym: '11:52:04.173', department_id: 3, description: 'hgjayfwytf', employee_id: 1, progress_tym: '11:36:29.935', start_date: '2025-03-05T11:31:51.799509', status_id: 2, task_name: 'task1' },
-        // { task_id: 2, complete_tym: '11:52:24.086', department_id: 2, description: 'hvydtrd', employee_id: 3, progress_tym: '11:52:43.833', start_date: '2025-03-05T11:33:20.975553', status_id: 2, task_name: 'task2' },
-        // { task_id: 3, complete_tym: '11:53:27.378', department_id: 4, description: 'hvydtrd', employee_id: 5, progress_tym: '11:53:10.375', start_date: '2025-03-05T11:34:26.413407', status_id: 2, task_name: 'task3' }
+
+      
       ]
     };
   },

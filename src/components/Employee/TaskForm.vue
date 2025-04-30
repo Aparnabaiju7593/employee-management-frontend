@@ -1,12 +1,6 @@
 <template>
-  <v-container>
-
-    <br>
-    <br>
-    <br>
-    <br>
+  <v-main>
     <v-row>
-      
       <v-col v-for="task in tasks" :key="task.taskId" cols="12" md="6" lg="4">
         <v-card class="task-card" elevation="4">
           <v-card-title class="text-h6">{{ task.taskName }}</v-card-title>
@@ -16,7 +10,7 @@
         </v-card>
       </v-col>
     </v-row>
-  </v-container>
+  </v-main>
 </template>
 
 <script>

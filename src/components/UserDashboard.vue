@@ -33,9 +33,7 @@
 
     <!-- Task Management -->
     <v-main class="pa-6 bg-gray-100">
-      
       <router-view></router-view>
-    
     </v-main>
   </v-app>
 </template>
@@ -46,8 +44,9 @@ export default {
     return {
       drawer: true,
       navItems: [
-        { text: 'Home', route: '/home' },
+       
         { text: 'Task', route: '/task' },
+        { text: 'Request Resouce', route: '/requestres' },
         { text: 'Resource', route: '/resource' },
         { text: 'Late',route:'/late'},
         {text:'Leave',route:'/leave'},

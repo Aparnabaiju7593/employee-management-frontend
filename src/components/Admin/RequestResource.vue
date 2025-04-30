@@ -1,77 +1,124 @@
 <template>
-    <div>
-      <table class="table-auto w-full border-collapse border border-gray-300">
-        <thead>
-          <tr class="bg-gray-200">
-            <th class="border px-4 py-2">Request ID</th>
-            <th class="border px-4 py-2">Approval Date</th>
-            <th class="border px-4 py-2">Employee ID</th>
-            <th class="border px-4 py-2">Quantity</th>
-            <th class="border px-4 py-2">Reason</th>
-            <th class="border px-4 py-2">Request Date</th>
-            <th class="border px-4 py-2">Resource ID</th>
-            <th class="border px-4 py-2">Status</th>
-            <th class="border px-4 py-2">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(request, index) in requests" :key="request.req_resource_id">
-            <td class="border px-4 py-2">{{ request.req_resource_id }}</td>
-            <td class="border px-4 py-2">{{ request.approval_date }}</td>
-            <td class="border px-4 py-2">{{ request.employee_id }}</td>
-            <td class="border px-4 py-2">{{ request.quantity }}</td>
-            <td class="border px-4 py-2">{{ request.reason }}</td>
-            <td class="border px-4 py-2">{{ request.request_date }}</td>
-            <td class="border px-4 py-2">{{ request.resource_id }}</td>
-            <td class="border px-4 py-2">
-              <select v-model="request.status_id" class="border p-1">
-                <option v-for="status in statuses" :key="status.id" :value="status.id">
-                  {{ status.label }}
-                </option>
-              </select>
-            </td>
-            <td class="border px-4 py-2">
-              <button @click="updateStatus(request, index)" class="bg-blue-500 text-white px-2 py-1 rounded">
-                Save
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        requests: [
-          { req_resource_id: 14, approval_date: "2025-03-05 11:03:46", employee_id: 3, quantity: 5, reason: "yftrsw43io", request_date: "2025-02-13", resource_id: 2, status_id: 1 },
-          { req_resource_id: 13, approval_date: "2025-03-06 13:39:48", employee_id: 4, quantity: 2, reason: "ghvrdxrei", request_date: "2025-02-23", resource_id: 3, status_id: 3 },
-          { req_resource_id: 15, approval_date: "2025-03-06 13:41:02", employee_id: 1, quantity: 3, reason: "yftrsw43io", request_date: "2025-01-13", resource_id: 7, status_id: 3 },
-          { req_resource_id: 16, approval_date: "2025-03-07 11:38:58", employee_id: 2, quantity: 3, reason: "yftrsw43io", request_date: "2025-01-11", resource_id: 2, status_id: 3 },
-          { req_resource_id: 18, approval_date: "2025-04-01 15:07:31", employee_id: 8, quantity: 5, reason: "ertyuiogo", request_date: "2025-06-13", resource_id: 6, status_id: 2 },
-        ],
-        statuses: [
-          { id: 1, label: "Pending" },
-          { id: 2, label: "Approved" },
-          { id: 3, label: "Rejected" },
-        ]
-      };
-    },
-    methods: {
-      updateStatus(request, index) {
-        console.log("Updated status:", request);
-        alert(`Status updated for request ID ${request.req_resource_id} to ${this.statuses.find(s => s.id === request.status_id).label}`);
-        // TODO: Add API call to update the status in the backend.
+  <div class="p-6">
+    <h2 class="text-2xl font-semibold mb-4">Resource Requests</h2>
+
+    <table class="w-full table-auto border-collapse border border-gray-300">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="border p-2">Request ID</th>
+          <th class="border p-2">Employee ID</th>
+          <th class="border p-2">Resource ID</th>
+          <th class="border p-2">Quantity</th>
+          <th class="border p-2">Reason</th>
+          <th class="border p-2">Request Date</th>
+          <th class="border p-2">Approval Date</th>
+          <th class="border p-2">Status</th>
+          <th class="border p-2">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="req in reqResources" :key="req.reqResourceId">
+          <td class="border p-2 text-center">{{ req.reqResourceId }}</td>
+          <td class="border p-2 text-center">{{ req.employee }}</td>
+          <td class="border p-2 text-center">{{ req.resource }}</td>
+          <td class="border p-2 text-center">{{ req.quantity }}</td>
+          <td class="border p-2 text-center">{{ req.reason }}</td>
+          <td class="border p-2 text-center">{{ req.requestDate }}</td>
+          <td class="border p-2 text-center">
+            {{ req.approvalDate }}
+
+          </td>
+          <td class="border p-2 text-center">{{ req.status }}</td>
+          <td class="border p-2 text-center"> <button @click="openEditDialog(req)">edit</button></td>
+          
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Edit Vehicle Dialog -->
+    <v-dialog v-model="editDialog" max-width="500px">
+            <v-card>
+              <v-card-title>Edit Vehicle</v-card-title>
+              <v-card-text>
+                <v-text-field label="EmployeeId" v-model="adminedited.employeeId" readonly></v-text-field>
+
+                <v-select 
+                  label="Status" 
+                  v-model="adminedited.statusId"
+                  :items="[1, 2, 3, 4]">
+
+                 </v-select>
+              </v-card-text>
+              <v-card-actions>
+                <v-btn @click="editDialog = false">Cancel</v-btn>
+                <v-spacer></v-spacer>
+                <v-btn color="blue" @click="updateRequest">Save</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+  </div>
+</template>
+<!-- localhost:8085/api/departmentadetails/getResource -->
+<script>
+import axios from 'axios';
+export default {
+  data() {
+    return {
+      reqResources: [],
+      adminedited:{},
+      editDialog: false,
+      isEditing: false,
+    };
+  },
+  async mounted() {
+    this.fetchReqResoures();
+  },
+  methods: {
+   async fetchReqResoures(){
+    this.employeeId = this.$route.query.employeeId || localStorage.getItem("employeeId");
+
+    if (!this.employeeId) {
+        console.error("Employee ID is missing or undefined.");
+        return;
       }
-    }
-  };
-  </script>
-  
-  <style>
-  table {
-    width: 100%;
-  }
-  </style>
-  
+
+      try {
+        const response = await axios.get("http://localhost:8085/api/departmentadetails/getResource",{
+        
+          params: { employeeId: this.employeeId } // Correct way to pass query parameters
+        });
+        this.reqResources= response.data;
+      } catch (error) {
+        console.error("Error fetching resouurces:",error);
+      }
+
+   },
+   openEditDialog(req) {
+      this.adminedited = { ...req };
+      this.editDialog = true;
+    },
+    async updateRequest() {
+      try {
+        const response = await axios.put(
+          `http://localhost:8085/api/departmentadetails/addApproval?employeeId=${this.adminedited.employeeId}&statusId=${this.adminedited.statusId}`
+        );
+        const index = this.reqResources.findIndex(v => v.reqResourceId === response.data.reqResourceId);
+        if (index !== -1) {
+          this.reqResources[index] = response.data;
+        }
+        this.editDialog = false;
+      } catch (error) {
+        console.error("Error updating vehicle:", error);
+      }
+    },
+    
+    
+  },
+};
+</script>
+
+<style scoped>
+table {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+</style>
