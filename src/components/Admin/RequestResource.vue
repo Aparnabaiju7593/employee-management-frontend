@@ -1,4 +1,5 @@
 <template>
+  <v-main>
   <div class="p-6">
     <h2 class="text-2xl font-semibold mb-4">Resource Requests</h2>
 
@@ -35,10 +36,10 @@
       </tbody>
     </table>
 
-    <!-- Edit Vehicle Dialog -->
+    <!-- Edit status Dialog -->
     <v-dialog v-model="editDialog" max-width="500px">
             <v-card>
-              <v-card-title>Edit Vehicle</v-card-title>
+              <v-card-title>Edit Status</v-card-title>
               <v-card-text>
                 <v-text-field label="EmployeeId" v-model="adminedited.employeeId" readonly></v-text-field>
 
@@ -57,6 +58,7 @@
             </v-card>
           </v-dialog>
   </div>
+</v-main>
 </template>
 <!-- localhost:8085/api/departmentadetails/getResource -->
 <script>

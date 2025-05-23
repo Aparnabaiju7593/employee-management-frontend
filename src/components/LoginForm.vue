@@ -101,14 +101,27 @@
       let routePath = "/"; // Default route
 
       // Redirect based on role
-      if (role ==="admin") {
-        routePath = "/dash";
-      } else if (role === "employee") {
-        routePath = "/employeedash";
-      } else {
-        console.error("Unknown role:", role);
-        return;
-      }
+      // if (role ==="admin") {
+      //   routePath = "/dash";
+      // } else if (role === "employee") {
+      //   routePath = "/employeedash";
+      // } else {
+        
+      //   console.error("Unknown role:", role);
+      //   return;
+      // }
+      // Redirect based on role
+        if (role === "admin") {
+          routePath = "/dash";
+        } else if (role === "employee") {
+          routePath = "/employeedash";
+        } else if (role === "hr") {
+          routePath = "/hrdash";
+        } else {
+          console.error("Unknown role:", role);
+          return;
+        }
+
 
       // Navigate to the correct home page with user data
       this.$router.push({ path: routePath, query: { name } });

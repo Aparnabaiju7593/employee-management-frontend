@@ -99,7 +99,8 @@ export default {
   const employeeData = {
     ...this.employee,
     departmentName: this.employee.department,
-    departmentId: this.employee.departmentId,  // ✅ Explicitly send as departmentName
+    departmentId: this.employee.departmentId,
+    roleId:this.employee.roleId,  // ✅ Explicitly send as departmentName
   };
 
   console.log("Sending Data to API:", JSON.stringify(employeeData)); // Debugging log
@@ -124,6 +125,7 @@ export default {
   } catch (error) {
     console.error("Error:", error);
     alert("Registration Failed!");
+    console.log(formData);
   }
 },
 assignDepartment(departmentId) {

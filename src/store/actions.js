@@ -22,7 +22,8 @@ export default{
             console.error("Login Error:", error);
           }
     },
-    //get all late request
+
+        //get all late request
     async late({rootGetters}){
         const res = await axios.get(`${rootGetters.getUrl}``api/departmentadetails/getAllLateDto`);
         if(res.status >= 200 || res.status <300){
@@ -197,5 +198,15 @@ async allRes({ rootGetters }) {
 //     }
 
 
-    
+    //employee add resources
+  async updatestatus({rootGetters},payload){
+    const baseUrl = rootGetters.getUrl; 
+    const res = await axios.post(`${baseUrl}/api/EmployeeDetails/updateTaskstatus`,payload);
+    if(res.status >= 200 || res.status <300){
+        console.log(res);
+        
+        return res;
+        
+    }
+},
 }

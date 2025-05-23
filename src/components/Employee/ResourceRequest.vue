@@ -1,8 +1,7 @@
 <template>
   <br>
   <br>
-  <br>
-  <br>
+ 
   <v-container>
     <v-card class="mx-auto" max-width="400" title="Request Resource">
       <v-container>
@@ -70,6 +69,7 @@
       </v-card-actions>
     </v-card>
   </v-container>
+
 </template>
 
 <script>

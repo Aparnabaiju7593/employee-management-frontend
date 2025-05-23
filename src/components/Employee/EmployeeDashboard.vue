@@ -50,7 +50,7 @@ export default {
         { text: 'Resource Request',route: '/reqresource'}
 
         
-      ]
+      ],
     };
   },
   computed: {

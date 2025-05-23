@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import UserDashboard from "./components/UserDashboard.vue";
 import EmployeeDashboard from "./components/Employee/EmployeeDashboard.vue";
+import HrDashboard from "./components/Hr/HrDashboard.vue";
 
 const routes = [
   { path: '/login', component: () => import('./components/LoginForm.vue'), name: 'login' },
@@ -40,6 +41,13 @@ const routes = [
      
     ],
   },
+  {
+    path:"/hrdash",
+    component:HrDashboard,
+    children:[
+      
+    ]
+  }
 ];
 
 const router = createRouter({

@@ -2,6 +2,7 @@
   <div class="department-page">
     <div class="header-section mb-6">
       <v-container>
+        <v-main>
         <v-row align="center" justify="space-between">
           <!-- <v-col cols="6">
             <h1 class="text-h4 font-weight-bold primary--text">Department Management</h1> -->
@@ -17,6 +18,7 @@
             </v-btn>
           </v-col>
         </v-row>
+        </v-main>
       </v-container>
     </div>
 
@@ -128,6 +130,7 @@
       </v-card>
     </v-dialog>
   </div>
+ 
 </template>
 
 <script>
@@ -198,12 +201,12 @@ export default {
       try {
         if (this.editedIndex > -1) {
           // Update existing department
-          await axios.put(`http://localhost:8085/api/departmentadetails/updatedepartment/${this.editedDepartment.departmentId}`, {
+          await axios.put(`http://localhost:8085/api/departmentadetails/updateDep/${this.editedDepartment.departmentId}`, {
             department: this.editedDepartment.department
           })
         } else {
           // Create new department
-          await axios.post('http://localhost:8085/api/departmentadetails/adddepartment', {
+          await axios.post('http://localhost:8085/api/departmentadetails/addData', {
             department: this.editedDepartment.department
           })
         }
@@ -216,7 +219,7 @@ export default {
 
     async deleteDepartment() {
       try {
-        await axios.delete(`http://localhost:8085/api/departmentadetails/deletedepartment/${this.editedDepartment.departmentId}`)
+        await axios.delete(`http://localhost:8085/api/departmentadetails/deleteDep/${this.editedDepartment.departmentId}`)
         this.deleteDialog = false
         this.fetchDepartments()
       } catch (error) {
