@@ -47,7 +47,9 @@ export default {
         { text: 'Tasks', route: '/tasks' },
         { text: 'Leave Requests', route: '/lerequest' },
         { text:'Late Requests', route:'/larequest'},
-        { text: 'Resource Request',route: '/reqresource'}
+        { text: 'Resource Request',route: '/reqresource'},
+        {text:'Add Leave',route:'/addLeave'},
+        {text:'Add Late',route:'/addLate'},
 
         
       ],

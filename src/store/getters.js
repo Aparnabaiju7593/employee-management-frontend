@@ -3,5 +3,6 @@ export default{
     getRole :(state)=> state.role,
     getForgotpassword :(state)=>state.forgotpassword,
     getEmployee :(state)=> state.employee,
+    getDepartmentId :(state)=> state.departmentId,
 
 }

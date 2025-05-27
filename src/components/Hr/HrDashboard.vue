@@ -44,10 +44,10 @@ export default {
     return {
       drawer: true,
       navItems: [
-        // { text: 'Tasks', route: '/tasks' },
-        // { text: 'Leave Requests', route: '/lerequest' },
-        // { text:'Late Requests', route:'/larequest'},
-        // { text: 'Resource Request',route: '/reqresource'}
+        { text: 'Task', route: '/hrdash/addtask' },
+         { text: 'RequestResource', route: '/hrdash/hrrequestres' },
+         { text:'ViewLate ', route:'/hrdash/viewLate'},
+        { text: 'ViewLeave',route: '/hrdash/viewLeave'},
 
         
       ],

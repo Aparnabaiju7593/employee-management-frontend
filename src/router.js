@@ -18,13 +18,13 @@ const routes = [
       {path:'',redirect:'task'},
       // { path: '/home', component: () => import('./components/UserHome.vue'), name: 'user-home' },
       { path:'/task', component: () => import('./components/TaskPage.vue'), name:'task'},
-      { path: '/requestres', component: () => import('@/components/Admin/RequestResource.vue'), name: 'Request-resouces' },
+      // { path: '/requestres', component: () => import('@/components/Admin/RequestResource.vue'), name: 'Request-resouces' },
       { path:'/resource', component: () => import('./components/ResourcePage.vue'), name:'resource'},
       { path:'/late' ,component: () => import('./components/LatePage.vue'),name:'late'},
       { path:'/leave' ,component: () => import('./components/LeavePage.vue'),name:'leave'},
       { path:'/department' ,component: () => import('./components/DepartmentPage.vue'),name:'department'},
       // { path:'/resourcereq' ,component: () => import('@/components/RequestResource.vue'),name:'resourcereq'},
-  
+      { path: 'requestres', component: () => import('@/components/Hr/RequestResource'), name: 'Request-resouces' },
     ],
   },
   {path: "/employeedash",
@@ -35,7 +35,9 @@ const routes = [
      
       { path: '/lerequest', component: () => import('@/components/Employee/LeaveRequest.vue'), name: 'lerequest' },
       { path: '/larequest', component: () => import('@/components/Employee/LateRequest.vue'), name: 'larequest' },
-      { path: '/reqresource', component: () => import('@/components/Employee/ResourceRequest.vue'), name: 'reqresource' }
+      { path: '/reqresource', component: () => import('@/components/Employee/ResourceRequest.vue'), name: 'reqresource' },
+      { path:'/addLeave', component: () => import ('@/components/Employee/AddLeave.vue'),name:'addLeave'},
+       { path:'/addLate', component: () => import ('@/components/Employee/AddLate.vue'),name:'addLate'},
       
 
      
@@ -45,6 +47,10 @@ const routes = [
     path:"/hrdash",
     component:HrDashboard,
     children:[
+      { path:'addtask' ,component: () => import('./components/Hr/AddTask.vue'),name:'addtask'},
+         { path: 'hrrequestres', component: () => import('@/components/Hr/RequestResource'), name: 'Request-hrresouces' },
+     { path:'viewLate' ,component: () => import('./components/Hr/ViewLate.vue'),name:'viewLate'},
+      { path:'viewLeave' ,component: () => import('./components/Hr/ViewLeave.vue'),name:'viewLeave'},
       
     ]
   }

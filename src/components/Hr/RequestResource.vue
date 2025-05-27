@@ -9,6 +9,7 @@
           <th class="border p-2">Request ID</th>
           <th class="border p-2">Employee ID</th>
           <th class="border p-2">Resource ID</th>
+          <th class="border p-2">Department ID</th>
           <th class="border p-2">Quantity</th>
           <th class="border p-2">Reason</th>
           <th class="border p-2">Request Date</th>
@@ -20,8 +21,10 @@
       <tbody>
         <tr v-for="req in reqResources" :key="req.reqResourceId">
           <td class="border p-2 text-center">{{ req.reqResourceId }}</td>
+          
           <td class="border p-2 text-center">{{ req.employee }}</td>
           <td class="border p-2 text-center">{{ req.resource }}</td>
+           <td class="border p-2 text-center">{{ req.departmentId }}</td>
           <td class="border p-2 text-center">{{ req.quantity }}</td>
           <td class="border p-2 text-center">{{ req.reason }}</td>
           <td class="border p-2 text-center">{{ req.requestDate }}</td>
@@ -60,9 +63,10 @@
   </div>
 </v-main>
 </template>
-<!-- localhost:8085/api/departmentadetails/getResource -->
+
 <script>
 import axios from 'axios';
+import { mapGetters } from 'vuex';
 export default {
   data() {
     return {
@@ -75,26 +79,32 @@ export default {
   async mounted() {
     this.fetchReqResoures();
   },
+  computed:{
+    ...mapGetters([" getdepartmentId"])
+  },
   methods: {
-   async fetchReqResoures(){
-    this.employeeId = this.$route.query.employeeId || localStorage.getItem("employeeId");
+   async fetchReqResoures() {
+  let departmentId = this.getDepartmentId;
 
-    if (!this.employeeId) {
-        console.error("Employee ID is missing or undefined.");
-        return;
-      }
+  if (!departmentId) {
+    departmentId = JSON.parse(sessionStorage.getItem('departmentId'));
+    console.warn('Using departmentId from sessionStorage:', departmentId);
+  }
 
-      try {
-        const response = await axios.get("http://localhost:8085/api/departmentadetails/getResource",{
-        
-          params: { employeeId: this.employeeId } // Correct way to pass query parameters
-        });
-        this.reqResources= response.data;
-      } catch (error) {
-        console.error("Error fetching resouurces:",error);
-      }
+  if (!departmentId) {
+    console.error("Department ID is still undefined. Cannot fetch resources.");
+    return;
+  }
 
-   },
+  try {
+    const response = await axios.get(`http://localhost:8085/api/departmentadetails/getResource?departmentId=${departmentId}`);
+    this.reqResources = response.data;
+  } catch (error) {
+    console.error("Error fetching resources:", error);
+  }
+}
+
+,
    openEditDialog(req) {
       this.adminedited = { ...req };
       this.editDialog = true;

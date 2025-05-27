@@ -9,6 +9,7 @@ const store=createStore({
         return{
             base_url:'http://localhost:8085',
             role:sessionStorage.getItem('role') ||'',
+             departmentId:sessionStorage.getItem('departmentId') ||'',
             forgotpassword:JSON.parse(sessionStorage.getItem('forgotpassword')) || [],
             employee:JSON.parse(sessionStorage.getItem('employee')) || [],
 

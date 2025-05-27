@@ -12,11 +12,13 @@ export default{
             if (res.data && res.data.id) {
               localStorage.setItem("employeeId", res.data.id);
               localStorage.setItem("employeeName", res.data.name);
+              localStorage.setItem("departmentId", res.data.departmentId);
             } else {
               console.error("ID is missing in response!");
             }
         
             commit("setRole", res.data.role);
+            commit("setDepartmentId", res.data.departmentId);
             return res;
           } catch (error) {
             console.error("Login Error:", error);
@@ -184,20 +186,6 @@ async allRes({ rootGetters }) {
     },
    
 
-    // localhost:8085/api/EmployeeDetails/reqResource
-
-//demo
-//     async fetchEmployee({commit, rootGetters}){
-//         const res = await axios.get(`${rootGetters.getUrl}/api/departmentadetails/getEmployee`);
-//         if(res.status >= 200 || res.status <300){
-//             console.log(res);
-//             commit('setEmployee',res.data);
-//             return true;
-            
-//         }
-//     }
-
-
     //employee add resources
   async updatestatus({rootGetters},payload){
     const baseUrl = rootGetters.getUrl; 
@@ -209,4 +197,81 @@ async allRes({ rootGetters }) {
         
     }
 },
+//hr add task
+  async addtask({rootGetters},payload){
+    const baseUrl = rootGetters.getUrl; 
+    const res = await axios.post(`${baseUrl}/api/departmentadetails/addTask`,payload);
+    if(res.status >= 200 || res.status <300){
+        console.log(res);
+        
+        return res;
+        
+    }
+},
+
+
+
+//list employeeid
+
+async allEmp({ rootGetters }) {
+    try {
+      const baseUrl = rootGetters.getUrl; 
+      if (!baseUrl) {
+        throw new Error("Base URL is undefined. Check Vuex state.");
+      }
+  
+      const res = await axios.get(`${baseUrl}/api/AdminDetails/listEmployees`);
+  
+      if (res.status >= 200 && res.status < 300) {
+        console.log("Employee:", res.data);
+        return { success: true, data: res.data };
+      } else {
+        console.error("Failed to fetch employees:", res);
+        return { success: false, message: "Failed to fetch employees." };
+      }
+    } catch (error) {
+      console.error("Error fetching employee list:", error);
+      return { success: false, message: error.message };
+    }
+  }
+  ,
+
+  //employee add leave dep list
+async fetchDepartments({ rootGetters }) {
+  try {
+    const baseUrl = rootGetters.getUrl; 
+    if (!baseUrl) {
+      throw new Error("Base URL is undefined. Check Vuex state.");
+    }
+    
+    const res = await axios.get(`${baseUrl}/api/AdminDetails/listallDepartment`);
+
+    if (res.status >= 200 && res.status < 300) {
+      return { success: true, data: res.data };
+    } else {
+      return { success: false, message: "Failed to fetch departments." };
+    }
+  } catch (error) {
+    console.error("Error fetching department list:", error);
+    return { success: false, message: error.message };
+  }
+}
+,
+
+// localhost:8085/api/EmployeeDetails/addleave
+  //employee add leave request
+  async submitLeaveRequest({rootGetters},payload){
+    const baseUrl = rootGetters.getUrl; 
+    const res = await axios.post(`${baseUrl}/api/EmployeeDetails/addleave`,payload);
+    if(res.status >= 200 || res.status <300){
+        console.log(res);
+        
+        return res;
+        
+    }
+},
+
+
+
+
 }

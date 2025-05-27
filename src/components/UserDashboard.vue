@@ -46,16 +46,16 @@ export default {
       navItems: [
        
         { text: 'Task', route: '/task' },
-        { text: 'Request Resouce', route: '/requestres' },
+        { text: 'Request Resouce', route: '/dash/requestres' },
         { text: 'Resource', route: '/resource' },
         { text: 'Late',route:'/late'},
         {text:'Leave',route:'/leave'},
         {text:'Department',route:'/department'}
       ],
-      tasks: [
-        { task_id: 4, complete_tym: '', department_id: 4, description: 'Fix Login Issue', employee_id: 4, progress_tym: '', start_date: '2025-03-05T11:36:51.799509', status_id: 2 },
-        { task_id: 1, complete_tym: '11:52:04.173', department_id: 3, description: 'Update database schema', employee_id: 1, progress_tym: '11:36:29.935', start_date: '2025-03-05T11:31:51.799509', status_id: 1 }
-      ],
+      // tasks: [
+      //   { task_id: 4, complete_tym: '', department_id: 4, description: 'Fix Login Issue', employee_id: 4, progress_tym: '', start_date: '2025-03-05T11:36:51.799509', status_id: 2 },
+      //   { task_id: 1, complete_tym: '11:52:04.173', department_id: 3, description: 'Update database schema', employee_id: 1, progress_tym: '11:36:29.935', start_date: '2025-03-05T11:31:51.799509', status_id: 1 }
+      // ],
     };
   },
   computed: {
