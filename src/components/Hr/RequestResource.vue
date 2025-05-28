@@ -33,7 +33,8 @@
 
           </td>
           <td class="border p-2 text-center">{{ req.status }}</td>
-          <td class="border p-2 text-center"> <button @click="openEditDialog(req)">edit</button></td>
+          <td class="border p-2 text-center"> <button @click="openEditDialog(req)">edit</button>
+</td>
           
         </tr>
       </tbody>
@@ -110,22 +111,28 @@ export default {
       this.editDialog = true;
     },
     async updateRequest() {
-      try {
-        const response = await axios.put(
-          `http://localhost:8085/api/departmentadetails/addApproval?employeeId=${this.adminedited.employeeId}&statusId=${this.adminedited.statusId}`
-        );
-        const index = this.reqResources.findIndex(v => v.reqResourceId === response.data.reqResourceId);
-        if (index !== -1) {
-          this.reqResources[index] = response.data;
-        }
-        this.editDialog = false;
-      } catch (error) {
-        console.error("Error updating vehicle:", error);
-      }
-    },
+  try {
+    const response = await axios.put(
+      `http://localhost:8085/api/departmentadetails/addApprovals?employeeId=${this.adminedited.employeeId}&statusId=${this.adminedited.statusId}&reqResourceId=${this.adminedited.reqResourceId}`
+    );
+
+    const index = this.reqResources.findIndex(v => v.reqResourceId === response.data.reqResourceId);
+    if (index !== -1) {
+      this.reqResources[index] = response.data;
+      this.fetchReqResoures();
+    }
+
+    this.editDialog = false;
+  } catch (error) {
+    console.error("Error updating resource request:", error);
+  }
+}
+
     
     
   },
+ 
+    
 };
 </script>
 

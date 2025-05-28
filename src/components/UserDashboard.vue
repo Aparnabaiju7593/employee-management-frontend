@@ -75,14 +75,9 @@ export default {
       return this.$route.path.startsWith(route);
     },
     async logout() {
-      try {
-        const response = await this.$store.dispatch('logout');
-        if (response) {
+      
           this.$router.push('/login');
-        }
-      } catch (error) {
-        console.error("Logout failed", error);
-      }
+        
     },
 
     formatDate(dateString) {

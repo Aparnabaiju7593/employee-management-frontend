@@ -52,11 +52,24 @@ export default {
 
   methods: {
     async fetchLate(){
-      const response = await axios.get(`http://localhost:8085/api/departmentadetails/getAllLateDto`)
-      this.lateRequests = response.data;
-      this.fetched = true;
-      console.log(response);
-      
+      //   //
+       let departmentId = this.getDepartmentId;
+
+        if (!departmentId) {
+          departmentId = JSON.parse(sessionStorage.getItem('departmentId'));
+          console.warn('Using departmentId from sessionStorage:', departmentId);
+        }
+
+        if (!departmentId) {
+                  console.error("Department ID is still undefined. Cannot fetch resources.");
+                  return;
+        }
+
+          const response = await axios.get(`http://localhost:8085/api/departmentadetails/getAllLateDtobydep?departmentId=${departmentId}`)
+          this.lateRequests = response.data;
+          this.fetched = true;
+          console.log(response);
+          
 
     },
     formatDate(dateTime) {

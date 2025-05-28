@@ -13,6 +13,9 @@
             <th>End Date</th>
             <th>Reason</th>
             <th>Status</th>
+            <th>Actions</th>
+
+            
           </tr>
         </thead>
         <tbody>
@@ -24,12 +27,32 @@
             <td>{{ (request.endDate) }}</td>
             <td>{{ request.reason }}</td>
             <td>{{ request.status }}</td>
-            <!-- <td :class="getStatusClass(request.status_id)">
-              {{ getStatusText(request.status_id) }} -->
-            <!-- </td> -->
+            <td class="border p-2 text-center"> <button @click="openEditDialog(request)">edit</button>
+</td>
+           
           </tr>
         </tbody>
       </table>
+       <!-- Edit status Dialog -->
+    <v-dialog v-model="editDialog" max-width="500px">
+            <v-card>
+              <v-card-title>Edit Status</v-card-title>
+              <v-card-text>
+
+                <v-select 
+                  label="Status" 
+                  v-model="hredited.statusId"
+                  :items="[1, 2, 3, 4]">
+
+                 </v-select>
+              </v-card-text>
+              <v-card-actions>
+                <v-btn @click="editDialog = false">Cancel</v-btn>
+                <v-spacer></v-spacer>
+                <v-btn color="blue" @click="updateRequest">Save</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
     </div>
   </v-main>
   </template>
@@ -41,22 +64,58 @@ import axios from 'axios';
     data() {
       return {
         leaveRequests: [
-        ]
+        ],
+         editDialog: false,hredited:{},
+      isEditing: false,
       };
     },
     async mounted(){
       this.fetchLeave();
     },
+    
       
     
     methods: {
       async fetchLeave(){
-        const response = await axios.get(`http://localhost:8085/api/departmentadetails/getLeaveDto`)
+        let departmentId = this.getDepartmentId;
+
+  if (!departmentId) {
+    departmentId = JSON.parse(sessionStorage.getItem('departmentId'));
+    console.warn('Using departmentId from sessionStorage:', departmentId);
+  }
+
+  if (!departmentId) {
+    console.error("Department ID is still undefined. Cannot fetch resources.");
+    return;
+  }
+
+        const response = await axios.get(`http://localhost:8085/api/departmentadetails/getLeaveDtobydep?departmentId=${departmentId}`)
         this.leaveRequests = response.data;
         this.fetched = true;
         console.log(response);
 
       },
+       openEditDialog(request) {
+      this.hredited = { ...request };
+      this.editDialog = true;
+    },
+    async updateRequest() {
+  try {
+    const response = await axios.put(
+      `http://localhost:8085/api/departmentadetails/addApprovaleave?leaveId=${this.hredited.leaveId}&statusId=${this.hredited.statusId}`
+    );
+
+    const index = this.leaveRequests.findIndex(v => v.leaveId === response.data.leaveId);
+    if (index !== -1) {
+      this.leaveRequests[index] = response.data;
+      this.fetchLeave();
+    }
+
+    this.editDialog = false;
+  } catch (error) {
+    console.error("Error updating resource request:", error);
+  }
+}
       
     }
   };
