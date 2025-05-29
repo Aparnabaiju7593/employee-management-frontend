@@ -127,6 +127,8 @@
       this.$router.push({ path: routePath, query: { name } });
     } else {
       console.log("Login failed");
+                alert("invalid sredentials")
+
     }
   } catch (error) {
     console.error("Login error:", error);

@@ -125,7 +125,6 @@ export default {
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 2rem;
-  margin-top: 20px;
 }
 
 .task-columns {

@@ -11,8 +11,11 @@
           <th>Employee</th>
           <th>Late Date</th>
           <th>Reason</th>
-          <th>Status</th>
           <th>Submitted Time</th>
+          <th>Status</th>
+          <th>Actions</th>
+
+          <!-- <th>Submitted Time</th> -->
         </tr>
       </thead>
       <tbody>
@@ -23,12 +26,37 @@
           <td>{{request.lateDate }}</td>
 
           <td>{{ request.reason }}</td>
-          <td>{{request.status }}</td>
           
           <td>{{request.submittedTime }}</td>
+          <td>{{request.status }}</td>
+           <td class="border p-2 text-center"> <button @click="openEditDialog(request)">edit</button>
+           </td>
+          <!-- <td>{{request.submittedTime }}</td> -->
         </tr>
       </tbody>
     </table>
+       <!-- Edit status Dialog -->
+    <v-dialog v-model="editDialog" max-width="500px">
+            <v-card>
+              <v-card-title>Edit Status</v-card-title>
+              <v-card-text>
+
+                <v-select 
+                  label="Status" 
+                  v-model="hredited.statusId"
+                  :items="viewstatuslist"
+                  item-title="statusName"   
+          item-value="statusId">
+
+                 </v-select>
+              </v-card-text>
+              <v-card-actions>
+                <v-btn @click="editDialog = false">Cancel</v-btn>
+                <v-spacer></v-spacer>
+                <v-btn color="blue" @click="updateRequest">Save</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
   </div>
 </v-main>
 </template>
@@ -41,11 +69,17 @@ export default {
     return {
       lateRequests: [
     
-      ]
+      ],
+      editDialog:false,
+      hredited:{},
+      isEditing:false,
+      viewstatuslist:[],
     };
   },
   async mounted() {
     this.fetchLate();
+        this.viewstatus();
+
     
   },
   
@@ -72,6 +106,8 @@ export default {
           
 
     },
+    
+    //
     formatDate(dateTime) {
       return new Date(dateTime).toLocaleString();
     },
@@ -80,8 +116,44 @@ export default {
     },
     getStatusClass(statusId) {
       return statusId === 1 ? "pending" : "processed";
+    },
+     openEditDialog(request) {
+      this.hredited = { ...request };
+      this.editDialog = true;
+    },
+    async updateRequest() {
+  try {
+    const response = await axios.put(
+      `http://localhost:8085/api/departmentadetails/addApprovalate?lateId=${this.hredited.lateId}&statusId=${this.hredited.statusId}`
+    );
+
+    const index = this.lateRequests.findIndex(v => v.lateId === response.data.lateId);
+    if (index !== -1) {
+      this.lateRequests[index] = response.data;
+      this.fetchLate();
     }
+
+    this.editDialog = false;
+  } catch (error) {
+    console.error("Error updating resource request:", error);
   }
+  
+},async viewstatus() {
+    try{
+      const result = await this.$store.dispatch("allstatus");
+      if(result && result.success && Array.isArray(result.data)){
+        this.viewstatuslist = result.data;
+        console.log("status:",this.viewstatuslist);
+      }else{
+        alert("status not found");
+      }
+    }catch(error){
+      console.error("error fetching status list:",error);
+    }
+    
+  },
+  },
+  
   
 };
 </script>

@@ -46,11 +46,14 @@ export default {
       navItems: [
        
         { text: 'Task', route: '/task' },
-        { text: 'Request Resouce', route: '/dash/requestres' },
+        // { text: 'Request Resouce', route: '/dash/requestres' },
         { text: 'Resource', route: '/resource' },
         { text: 'Late',route:'/late'},
         {text:'Leave',route:'/leave'},
-        {text:'Department',route:'/department'}
+        {text:'Department',route:'/department'},
+        {text:'Request Resource View',route:'/reqResView'},
+        {text:'View Employee',route:'/viewEmployee'},
+        
       ],
       // tasks: [
       //   { task_id: 4, complete_tym: '', department_id: 4, description: 'Fix Login Issue', employee_id: 4, progress_tym: '', start_date: '2025-03-05T11:36:51.799509', status_id: 2 },

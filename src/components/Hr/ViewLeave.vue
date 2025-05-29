@@ -7,7 +7,7 @@
         <thead>
           <tr>
             <th>Leave ID</th>
-            <th>Employee ID</th>
+            
             <th>Employee</th>
             <th>Start Date</th>
             <th>End Date</th>
@@ -21,7 +21,6 @@
         <tbody>
           <tr v-for="request in leaveRequests" :key="request.leave_id">
             <td>{{ request.leaveId }}</td>
-            <td>{{ request.employeeId }}</td>
             <td>{{ request.employeeName }}</td>
             <td>{{ (request.startDate) }}</td>
             <td>{{ (request.endDate) }}</td>
@@ -42,9 +41,11 @@
                 <v-select 
                   label="Status" 
                   v-model="hredited.statusId"
-                  :items="[1, 2, 3, 4]">
+                  :items="viewstatuslist"
+                  item-title="statusName"   
+          item-value="statusId">
+                           </v-select>
 
-                 </v-select>
               </v-card-text>
               <v-card-actions>
                 <v-btn @click="editDialog = false">Cancel</v-btn>
@@ -67,10 +68,13 @@ import axios from 'axios';
         ],
          editDialog: false,hredited:{},
       isEditing: false,
+      viewstatuslist:[],
       };
     },
     async mounted(){
       this.fetchLeave();
+          this.viewstatus();
+
     },
     
       
@@ -115,7 +119,20 @@ import axios from 'axios';
   } catch (error) {
     console.error("Error updating resource request:", error);
   }
-}
+},async viewstatus() {
+    try{
+      const result = await this.$store.dispatch("allstatus");
+      if(result && result.success && Array.isArray(result.data)){
+        this.viewstatuslist = result.data;
+        console.log("status:",this.viewstatuslist);
+      }else{
+        alert("status not found");
+      }
+    }catch(error){
+      console.error("error fetching status list:",error);
+    }
+    
+  },
       
     }
   };

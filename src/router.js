@@ -10,6 +10,8 @@ const routes = [
   { path: '/', component: () => import('./components/HomePage.vue'), name: 'home' },
   { path:'/contact' ,component: () => import('./components/ContactUs.vue'),name:'contact'},
   { path:'/about' ,component: () => import('./components/AboutUs.vue'),name:'about'},
+    { path:'/tas' ,component: () => import('./components/Employee/TasKs.vue'),name:'tas'},
+
   
 
   {path: "/dash",
@@ -23,8 +25,12 @@ const routes = [
       { path:'/late' ,component: () => import('./components/LatePage.vue'),name:'late'},
       { path:'/leave' ,component: () => import('./components/LeavePage.vue'),name:'leave'},
       { path:'/department' ,component: () => import('./components/DepartmentPage.vue'),name:'department'},
+      { path:'/reqResView' ,component: () => import('./components/Admin/ReqResourceView.vue'),name:'Request Resource View'},
+      { path:'/viewEmployee' ,component: () => import('./components/Admin/ViewEmployee.vue'),name:'View Employee'},
+
+
       // { path:'/resourcereq' ,component: () => import('@/components/RequestResource.vue'),name:'resourcereq'},
-      { path: 'requestres', component: () => import('@/components/Hr/RequestResource'), name: 'Request-resouces' },
+      // { path: 'requestres', component: () => import('@/components/Hr/RequestResource'), name: 'Request-resouces' },
     ],
   },
   {path: "/employeedash",

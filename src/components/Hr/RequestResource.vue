@@ -7,8 +7,8 @@
       <thead class="bg-gray-100">
         <tr>
           <th class="border p-2">Request ID</th>
-          <th class="border p-2">Employee ID</th>
-          <th class="border p-2">Resource ID</th>
+          <th class="border p-2">Employee </th>
+          <th class="border p-2">Resource </th>
           <th class="border p-2">Department ID</th>
           <th class="border p-2">Quantity</th>
           <th class="border p-2">Reason</th>
@@ -50,7 +50,9 @@
                 <v-select 
                   label="Status" 
                   v-model="adminedited.statusId"
-                  :items="[1, 2, 3, 4]">
+                  :items="viewstatuslist"
+                  item-title="statusName"   
+          item-value="statusId">
 
                  </v-select>
               </v-card-text>
@@ -75,10 +77,12 @@ export default {
       adminedited:{},
       editDialog: false,
       isEditing: false,
+      viewstatuslist:[],
     };
   },
   async mounted() {
     this.fetchReqResoures();
+    this.viewstatus();
   },
   computed:{
     ...mapGetters([" getdepartmentId"])
@@ -126,7 +130,20 @@ export default {
   } catch (error) {
     console.error("Error updating resource request:", error);
   }
-}
+},async viewstatus() {
+    try{
+      const result = await this.$store.dispatch("allstatus");
+      if(result && result.success && Array.isArray(result.data)){
+        this.viewstatuslist = result.data;
+        console.log("status:",this.viewstatuslist);
+      }else{
+        alert("status not found");
+      }
+    }catch(error){
+      console.error("error fetching status list:",error);
+    }
+    
+  },
 
     
     

@@ -270,7 +270,25 @@ async fetchDepartments({ rootGetters }) {
         
     }
 },
+async allstatus({ rootGetters }) {
+  try {
+    const baseUrl = rootGetters.getUrl; 
+    if (!baseUrl) {
+      throw new Error("Base URL is undefined. Check Vuex state.");
+    }
+    
+    const res = await axios.get(`${baseUrl}/api/AdminDetails/getStatus`);
 
+    if (res.status >= 200 && res.status < 300) {
+      return { success: true, data: res.data };
+    } else {
+      return { success: false, message: "Failed to fetch resources." };
+    }
+  } catch (error) {
+    console.error("Error fetching resources list:", error);
+    return { success: false, message: error.message };
+  }
+}
 
 
 
