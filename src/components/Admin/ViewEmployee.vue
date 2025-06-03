@@ -31,13 +31,40 @@
                 </v-list-item-content>
               </v-list-item>
             </v-list>
+
+            <div class="text-right mt-2">
+              <v-btn color="primary" @click="openDialog(employee)">Set Designation</v-btn>
+            </div>
           </v-col>
         </v-row>
       </v-card>
+
+      <!-- Designation Dialog -->
+      <v-dialog v-model="dialog" max-width="500px">
+        <v-card>
+          <v-card-title>Set Designation</v-card-title>
+          <v-card-text>
+            <v-select 
+              v-model="selectedDesignationId"
+              :items="viewdesignationlist"
+              color="primary"
+              label="Designation Name"
+              variant="underlined"
+              item-title="designationName"   
+              item-value="designationId"
+              required
+            ></v-select>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn @click="dialog = false">Cancel</v-btn>
+            <v-spacer></v-spacer>
+            <v-btn color="blue" @click="updateDesignation">Save</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </div>
   </v-main>
 </template>
-
 <script>
 import axios from "axios";
 
@@ -46,10 +73,15 @@ export default {
   data() {
     return {
       employees: [],
+      viewdesignationlist: [],
+      dialog: false,
+      selectedEmployeeId: null,
+      selectedDesignationId: null,
     };
   },
   mounted() {
     this.fetchEmployees();
+    this.designationList();
   },
   methods: {
     async fetchEmployees() {
@@ -60,14 +92,54 @@ export default {
         console.error("Failed to fetch employees:", error);
       }
     },
+    async designationList() {
+      try {
+        const result = await this.$store.dispatch("alldesignation");
+        if (result && result.success && Array.isArray(result.data)) {
+          this.viewdesignationlist = result.data;
+        } else {
+          alert("Designations not found");
+        }
+      } catch (error) {
+        console.error("Error fetching designation list:", error);
+      }
+    },
+    openDialog(employee) {
+      this.selectedEmployeeId = employee.employeeId;
+      this.selectedDesignationId = employee.designationId;
+      this.dialog = true;
+    },
+    async updateDesignation() {
+      try {
+        const response = await axios.put(
+          `http://localhost:8085/api/AdminDetails/updateDesignation`,
+          null,
+          {
+            params: {
+              employeeId: this.selectedEmployeeId,
+              designationId: this.selectedDesignationId,
+            },
+          }
+        );
+
+        if (response.status === 200) {
+          alert("Designation updated successfully!");
+          this.dialog = false;
+          this.fetchEmployees(); // Refresh data
+        } else {
+          alert("Failed to update designation");
+        }
+      } catch (error) {
+        console.error("Failed to update designation:", error);
+        alert("Error updating designation");
+      }
+    },
     formatDate(date) {
       return new Date(date).toLocaleDateString();
-    }
-  }
+    },
+  },
 };
 </script>
-
-
 <style scoped>
 .container {
   max-width: 1000px;

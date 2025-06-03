@@ -48,6 +48,7 @@ export default {
          { text: 'RequestResource', route: '/hrdash/hrrequestres' },
          { text:'ViewLate ', route:'/hrdash/viewLate'},
         { text: 'ViewLeave',route: '/hrdash/viewLeave'},
+        { text: 'hrviewEmployee', route:'/hrdash/hrviewEmployee'}
 
         
       ],

@@ -270,6 +270,7 @@ async fetchDepartments({ rootGetters }) {
         
     }
 },
+//list status
 async allstatus({ rootGetters }) {
   try {
     const baseUrl = rootGetters.getUrl; 
@@ -288,8 +289,28 @@ async allstatus({ rootGetters }) {
     console.error("Error fetching resources list:", error);
     return { success: false, message: error.message };
   }
-}
+},
 
+//get all designation
+async alldesignation({ rootGetters }) {
+  try {
+    const baseUrl = rootGetters.getUrl; 
+    if (!baseUrl) {
+      throw new Error("Base URL is undefined. Check Vuex state.");
+    }
+    
+    const res = await axios.get(`${baseUrl}/api/AdminDetails/getAllDesignation`);
+
+    if (res.status >= 200 && res.status < 300) {
+      return { success: true, data: res.data };
+    } else {
+      return { success: false, message: "Failed to fetch designation." };
+    }
+  } catch (error) {
+    console.error("Error fetching designation list:", error);
+    return { success: false, message: error.message };
+  }
+}
 
 
 }
