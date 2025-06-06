@@ -46,19 +46,18 @@
           required
         ></v-text-field>
 
-        <v-text-field
+        <!-- <v-text-field
           v-model="status"
           color="primary"
           label="Status"
           variant="underlined"
           type="status"
           required
-        ></v-text-field>
+        ></v-text-field> -->
 
        
       </v-container>
 
-      <v-divider></v-divider>
 
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -73,6 +72,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   data() {
     return {
@@ -88,8 +89,23 @@ export default {
   mounted() {
     this.resoList();
   },
+  computed:{
+    ...mapGetters(["getemployeeId", "getdepartmentId"])
+
+  },
   methods: {
     async submitRequest() {
+      let departmentId = this.getDepartmentId;
+
+  if (!departmentId) {
+    departmentId = JSON.parse(sessionStorage.getItem('departmentId'));
+    console.warn('Using departmentId from sessionStorage:', departmentId);
+  }
+
+  if (!departmentId) {
+    console.error("Department ID is still undefined. Cannot fetch resources.");
+    return;
+  }
     
       if ( !this.resource || !this.quantity || !this.date) {
         alert("Please fill in all required fields.");
@@ -97,11 +113,11 @@ export default {
       }
       const payload= {
         resourceId: this.resourceId,
-        employeeId: "1",
+         employeeId: this.getemployeeId, 
+        departmentId: this.getdepartmentId,
         quantity: this.quantity,
         reason: this.reason,
         requestDate: this.date,
-        status: this.status,
       };
       try{
       const response = await this.$store.dispatch("reqResource",payload);

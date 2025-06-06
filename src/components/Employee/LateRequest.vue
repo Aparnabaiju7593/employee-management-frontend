@@ -30,8 +30,10 @@
 </v-main>
 </template>
 
+
 <script>
 import axios from 'axios';
+  import { mapGetters } from 'vuex';
 
 export default {
   data() {
@@ -40,17 +42,17 @@ export default {
       lateRequests: []
     };
   },
- 
+ computed:{
+    ...mapGetters(["getemployeeId", "getdepartmentId"])
+
+  },
+
   methods: {
     async fetchLateRequests() {
-      this.employeeId = this.$route.query.employeeId || localStorage.getItem("employeeId");
-      if (!this.employeeId) {
-        console.error("Employee ID is missing or undefined.");
-        return;
-      }
       try {
+
         const response = await axios.get("http://localhost:8085/api/EmployeeDetails/getLateview", {
-          params: { employeeId: this.employeeId }
+          params: { employeeId: this.getemployeeId }
         });
         this.lateRequests = response.data;
       } catch (error) {

@@ -45,7 +45,7 @@
             <v-card>
               <v-card-title>Edit Status</v-card-title>
               <v-card-text>
-                <v-text-field label="EmployeeId" v-model="adminedited.employeeId" readonly></v-text-field>
+                <v-text-field label="Employee" v-model="adminedited.employee" readonly></v-text-field>
 
                 <v-select 
                   label="Status" 

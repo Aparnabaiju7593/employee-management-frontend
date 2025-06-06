@@ -28,8 +28,10 @@
 </v-main>
 </template>
 
+
 <script>
 import axios from 'axios';
+  import { mapGetters } from 'vuex';
 
 export default {
   data() {
@@ -38,10 +40,14 @@ export default {
       leaveRequests: []
     };
   },
+  computed:{
+    ...mapGetters(["getemployeeId", "getdepartmentId"])
+
+  },
   methods: {
     async fetchLeaveRequests() {
-      // ✅ Ensure employeeId is correctly retrieved
-      this.employeeId = this.$route.query.employeeId || localStorage.getItem("employeeId");
+      
+      this.employeeId = this.getemployeeId;
 
       if (!this.employeeId) {
         console.error("Employee ID is missing or undefined.");
@@ -50,7 +56,7 @@ export default {
 
       try {
         const response = await axios.get("http://localhost:8085/api/EmployeeDetails/getLeaveView", {
-          params: { employeeId: this.employeeId } // Correct way to pass query parameters
+          params: { employeeId: this.employeeId } 
         });
         this.leaveRequests = response.data;
       } catch (error) {

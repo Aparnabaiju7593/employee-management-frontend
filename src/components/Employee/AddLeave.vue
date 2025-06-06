@@ -5,7 +5,7 @@
       <v-container>
 
         <!-- Department Dropdown -->
-        <v-select 
+        <!-- <v-select 
           v-model="departmentId"
           :items="departments"
           color="primary"
@@ -14,7 +14,7 @@
           item-value="departmentId"
           variant="underlined"
           required
-        ></v-select>
+        ></v-select> -->
 
         <!-- Reason -->
         <v-text-field
@@ -47,7 +47,7 @@
 
       </v-container>
 
-      <v-divider></v-divider>
+      <!-- <v-divider></v-divider> -->
 
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -60,45 +60,51 @@
   </v-container>
 </template>
 
+
 <script>
+  import { mapGetters } from 'vuex';
+
 export default {
   data() {
     return {
-      departmentId: null,
       reason: "",
       startDate: "",
       endDate: "",
       departments: []
     };
   },
+  computed:{
+    ...mapGetters(["getemployeeId", "getdepartmentId"])
+
+  },
   mounted() {
-    this.fetchDepartments();
+    // this.fetchDepartments();
   },
   methods: {
-    async fetchDepartments() {
-      try {
-        const response = await this.$store.dispatch("fetchDepartments");
-        if (response && response.success && Array.isArray(response.data)) {
-          this.departments = response.data;
-          console.log(this.departments);
+    // async fetchDepartments() {
+    //   try {
+    //     const response = await this.$store.dispatch("fetchDepartments");
+    //     if (response && response.success && Array.isArray(response.data)) {
+    //       this.departments = response.data;
+    //       console.log(this.departments);
           
-        } else {
-          alert("Failed to fetch departments");
-        }
-      } catch (error) {
-        console.error("Error fetching departments:", error);
-      }
-    },
+    //     } else {
+    //       alert("Failed to fetch departments");
+    //     }
+    //   } catch (error) {
+    //     console.error("Error fetching departments:", error);
+    //   }
+    // },
 
     async submitLeaveRequest() {
-      if (!this.departmentId || !this.reason || !this.startDate || !this.endDate) {
+      if (!this.reason || !this.startDate || !this.endDate) {
         alert("Please fill in all fields.");
         return;
       }
 
       const payload = {
-        employeeId: "1", // Replace with dynamic employee ID if available
-        departmentId: this.departmentId,
+        employeeId: this.getemployeeId, 
+        departmentId: this.getdepartmentId,
         reason: this.reason,
         startDate: this.startDate,
         endDate: this.endDate

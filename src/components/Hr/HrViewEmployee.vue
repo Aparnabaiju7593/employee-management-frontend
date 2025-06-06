@@ -58,6 +58,8 @@
 
 <script>
 import axios from "axios";
+import { mapGetters } from 'vuex';
+
 
 export default {
   name: "AdminEmployeeView",
@@ -69,10 +71,25 @@ export default {
   mounted() {
     this.fetchEmployees();
   },
+  computed:{
+    ...mapGetters([" getdepartmentId"])
+  },
   methods: {
+    
     async fetchEmployees() {
+       let departmentId = this.getDepartmentId;
+
+  if (!departmentId) {
+    departmentId = JSON.parse(sessionStorage.getItem('departmentId'));
+    console.warn('Using departmentId from sessionStorage:', departmentId);
+  }
+
+  if (!departmentId) {
+    console.error("Department ID is still undefined. Cannot fetch resources.");
+    return;
+  }
       try {
-        const response = await axios.get("http://localhost:8085/api/departmentadetails/listEmployeesbyhr");
+        const response = await axios.get(`http://localhost:8085/api/departmentadetails/listEmployeesbyhr?departmentId=${departmentId}`);
         this.employees = response.data;
       } catch (error) {
         console.error("Failed to fetch employees:", error);

@@ -8,11 +8,11 @@ export default{
         sessionStorage.setItem('forgotpassword',JSON.stringify(payload));
 
     },
-    setEmployee(state, payload){
-        state.employee =payload;
-        sessionStorage.setItem('employee',JSON.stringify(payload));
-    },
-     setDepartmentId(state, payload){
+    setemployeeId(state, payload) {
+  state.employeeId = payload;
+  sessionStorage.setItem('employeeId', JSON.stringify(payload));
+},
+     setdepartmentId(state, payload){
         state.departmentId =payload;
         sessionStorage.setItem('departmentId',JSON.stringify(payload));
     },

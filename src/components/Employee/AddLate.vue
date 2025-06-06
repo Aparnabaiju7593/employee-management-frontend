@@ -4,7 +4,7 @@
     <v-card class="mx-auto" max-width="500" title="Request Late Entry">
       <v-container>
 
-        <!-- Department Dropdown -->
+        <!-- Department Dropdown
         <v-select 
           v-model="departmentId"
           :items="departments"
@@ -14,7 +14,7 @@
           item-value="departmentId"
           variant="underlined"
           required
-        ></v-select>
+        ></v-select> -->
 
         <!-- Late Date -->
         <v-text-field
@@ -37,17 +37,16 @@
         ></v-text-field>
 
         <!-- Submitted Time (Read-only) -->
-        <v-text-field
+        <!-- <v-text-field
           v-model="submittedTime"
           color="primary"
           label="Submitted Time"
           readonly
           variant="underlined"
-        ></v-text-field>
+        ></v-text-field> -->
 
       </v-container>
 
-      <v-divider></v-divider>
 
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -61,10 +60,12 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex';
+
 export default {
   data() {
     return {
-      departmentId: null,
+      departmentId: "",
       lateDate: "",
       reason: "",
       submittedTime: this.getCurrentTimestamp(),
@@ -74,6 +75,11 @@ export default {
   mounted() {
     this.fetchDepartments();
   },
+  computed:{
+    ...mapGetters(["getemployeeId", "getdepartmentId"])
+
+  },
+
   methods: {
     getCurrentTimestamp() {
       const now = new Date();
@@ -94,17 +100,16 @@ export default {
     },
 
     async submitLateRequest() {
-      if (!this.departmentId || !this.lateDate || !this.reason) {
+      if (!this.lateDate || !this.reason) {
         alert("Please fill in all fields.");
         return;
       }
 
       const payload = {
-        employeeId: "1", // Replace with dynamic employee ID if available
-        departmentId: this.departmentId,
+         employeeId: this.getemployeeId, 
+        departmentId: this.getdepartmentId,
         lateDate: this.lateDate,
         reason: this.reason,
-        submittedTime: this.submittedTime
       };
 
       try {

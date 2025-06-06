@@ -10,7 +10,7 @@ export default{
         
             // Fix: Store 'id' as 'employeeId' in localStorage
             if (res.data && res.data.id) {
-              localStorage.setItem("employeeId", res.data.id);
+              localStorage.setItem("employeeId", res.data.employeeId);
               localStorage.setItem("employeeName", res.data.name);
               localStorage.setItem("departmentId", res.data.departmentId);
             } else {
@@ -18,7 +18,8 @@ export default{
             }
         
             commit("setRole", res.data.role);
-            commit("setDepartmentId", res.data.departmentId);
+            commit("setdepartmentId", res.data.departmentId);
+            commit("setemployeeId", res.data.id);
             return res;
           } catch (error) {
             console.error("Login Error:", error);
@@ -270,6 +271,18 @@ async fetchDepartments({ rootGetters }) {
         
     }
 },
+
+ //employee add leave request
+  async submitLateRequest({rootGetters},payload){
+    const baseUrl = rootGetters.getUrl; 
+    const res = await axios.post(`${baseUrl}/api/EmployeeDetails/lateReq`,payload);
+    if(res.status >= 200 || res.status <300){
+        console.log(res);
+        
+        return res;
+        
+    }
+},
 //list status
 async allstatus({ rootGetters }) {
   try {
@@ -310,7 +323,30 @@ async alldesignation({ rootGetters }) {
     console.error("Error fetching designation list:", error);
     return { success: false, message: error.message };
   }
+},
+
+
+ //employee add leave dep list
+async fetchTasks({ rootGetters },employeeId) {
+  try {
+    const baseUrl = rootGetters.getUrl; 
+    if (!baseUrl) {
+      throw new Error("Base URL is undefined. Check Vuex state.");
+    }
+    
+    const res = await axios.get(`${baseUrl}/api/EmployeeDetails/getEmployeeTask`,employeeId);
+
+    if (res.status >= 200 && res.status < 300) {
+      return { success: true, data: res.data };
+    } else {
+      return { success: false, message: "Failed to fetch departments." };
+    }
+  } catch (error) {
+    console.error("Error fetching department list:", error);
+    return { success: false, message: error.message };
+  }
 }
+,
 
 
 }

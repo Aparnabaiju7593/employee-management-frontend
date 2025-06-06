@@ -17,7 +17,7 @@
           required
         ></v-select>
 
-        <v-menu v-model="menu" :close-on-content-click="false" transition="scale-transition" offset-y>
+        <!-- <v-menu v-model="menu" :close-on-content-click="false" transition="scale-transition" offset-y>
           <template v-slot:activator="{ on, attrs }">
             <v-text-field
               v-model="newTask.startDate"
@@ -28,7 +28,7 @@
             ></v-text-field>
           </template>
           <v-date-picker v-model="newTask.startDate" @input="menu = false"></v-date-picker>
-        </v-menu>
+        </v-menu> -->
 
         <v-btn color="primary" type="submit">Add Task</v-btn>
       </v-form>
@@ -60,6 +60,7 @@
 
 <script>
 import axios from "axios";
+import { mapGetters } from 'vuex';
 
 export default {
   data() {
@@ -80,8 +81,12 @@ export default {
     this.fetchTasks();
     this.fetchEmployees();
   },
+  computed:{
+    ...mapGetters([" getdepartmentId"])
+  },
   methods: {
     async fetchTasks() {
+        
       try {
         const response = await axios.get("http://localhost:8085/api/departmentadetails/getTaskDto");
         this.tasks = response.data;
@@ -95,8 +100,19 @@ export default {
   },
 
     async fetchEmployees() {
+      let departmentId = this.getDepartmentId;
+
+  if (!departmentId) {
+    departmentId = JSON.parse(sessionStorage.getItem('departmentId'));
+    console.warn('Using departmentId from sessionStorage:', departmentId);
+  }
+
+  if (!departmentId) {
+    console.error("Department ID is still undefined. Cannot fetch resources.");
+    return;
+  }
       try {
-        const response = await axios.get("http://localhost:8085/api/AdminDetails/listEmployees");
+        const response = await axios.get(`http://localhost:8085/api/departmentadetails/listEmployeesbyhr?departmentId=${departmentId}`);
         this.viewemployeelist = response.data;
         console.log("employee",response.data);
       } catch (error) {
