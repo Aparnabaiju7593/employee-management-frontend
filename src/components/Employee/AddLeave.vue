@@ -31,6 +31,7 @@
           color="primary"
           label="Start Date"
           type="date"
+           :min="minDate"
           variant="underlined"
           required
         ></v-text-field>
@@ -41,6 +42,7 @@
           color="primary"
           label="End Date"
           type="date"
+           :min="minDate"
           variant="underlined"
           required
         ></v-text-field>
@@ -70,7 +72,8 @@ export default {
       reason: "",
       startDate: "",
       endDate: "",
-      departments: []
+      departments: [],
+       minDate: new Date().toISOString().split("T")[0]
     };
   },
   computed:{
@@ -113,6 +116,10 @@ export default {
       try {
         const response = await this.$store.dispatch("submitLeaveRequest", payload);
         alert("Leave request submitted successfully!");
+         this.reason = "";
+         this.startDate= "";
+         this.endDate = "";
+
         console.log(response)
       } catch (error) {
         console.error("Error submitting leave request:", error);

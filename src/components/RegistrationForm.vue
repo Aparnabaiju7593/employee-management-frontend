@@ -22,14 +22,14 @@
   required
   @update:modelValue="assignDepartment">
 </v-select>
-<v-select 
+<!-- <v-select 
   v-model="employee.roleId"
   :items="viewrolelist"
   item-title="role"  
   item-value="roleId"  
   label="Select Role"
   required>
-</v-select>
+</v-select> -->
 
 
 

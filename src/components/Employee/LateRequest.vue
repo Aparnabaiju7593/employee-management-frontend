@@ -22,7 +22,7 @@
           <td class="border p-2">
             <span :class="statusClass(late.status)">{{ late.status }}</span>
           </td>
-          <td class="border p-2">{{ late.submittedTime }}</td>
+<td class="border p-2">{{ formatDateAndTime(late.submittedTime) }}</td>
         </tr>
       </tbody>
     </table>
@@ -48,6 +48,18 @@ export default {
   },
 
   methods: {
+ 
+  formatDateAndTime(datetimeString) {
+    if (!datetimeString) return "";
+
+    // Split at 'T' and keep the date and time parts
+    const [datePart, timePart] = datetimeString.split("T");
+    const [year, month, day] = datePart.split("-");
+    const [hour, minute] = timePart.split(":");
+
+    return `${day}/${month}/${year} ${hour}:${minute}`;
+  }
+,
     async fetchLateRequests() {
       try {
 

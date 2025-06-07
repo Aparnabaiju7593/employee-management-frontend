@@ -6,7 +6,7 @@
         <v-avatar size="50">
           <!-- Profile Avatar Placeholder -->
         </v-avatar>
-        <p>{{ employeeDisplay }}</p>
+        <p>{{ this.getname }}</p>
       </v-list-item>
       <v-list density="compact" nav class="mt-0">
         <v-list-item 
@@ -39,6 +39,8 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex';
+
 export default {
   data() {
     return {
@@ -55,19 +57,8 @@ export default {
     };
   },
   computed: {
-    employeeDisplay() {
-  const employeeId = localStorage.getItem("employeeId") || "N/A"; // Retrieve ID from localStorage
-  const employeeName = localStorage.getItem("employeeName") || "Employee"; // Retrieve Name
-  return `${employeeName} (ID: ${employeeId})`; // Format: Austin (ID: 12)
-},
+     ...mapGetters(["getname"])
 
-    selectedRoute() {
-      return this.$route.path;
-    },
-    selectedNavItem() {
-      const selectedItem = this.navItems.find(item => this.selectedRoute.startsWith(item.route));
-      return selectedItem ? selectedItem.text : '';
-    }
   },
   methods: {
     async logout() {

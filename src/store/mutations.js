@@ -16,4 +16,8 @@ export default{
         state.departmentId =payload;
         sessionStorage.setItem('departmentId',JSON.stringify(payload));
     },
+    setname(state, payload){
+        state.name =payload;
+        sessionStorage.setItem('name',JSON.stringify(payload));
+    },
 }

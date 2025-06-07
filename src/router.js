@@ -46,6 +46,7 @@ const routes = [
       { path: '/reqresource', component: () => import('@/components/Employee/ResourceRequest.vue'), name: 'reqresource' },
       { path: '/addLeave', component: () => import('@/components/Employee/AddLeave.vue'), name: 'addLeave' },
       { path: '/addLate', component: () => import('@/components/Employee/AddLate.vue'), name: 'addLate' },
+      { path: '/empViewReqRes', component: () => import('@/components/Employee/EmployeeViewReqRes.vue'), name: 'empViewReqRes' },
 
 
 

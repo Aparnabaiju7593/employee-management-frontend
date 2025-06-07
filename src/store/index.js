@@ -14,6 +14,7 @@ const store=createStore({
       : null,
 
              departmentId:sessionStorage.getItem('departmentId') ||'',
+             name:sessionStorage.getItem('name') ||'',
             forgotpassword:JSON.parse(sessionStorage.getItem('forgotpassword')) || [],
             // employee:JSON.parse(sessionStorage.getItem('employee')) || [],
 

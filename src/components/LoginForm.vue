@@ -116,7 +116,7 @@
         } else if (role === "employee") {
           routePath = "/employeedash";
         } else if (role === "hr") {
-          routePath = "/hrdash";
+          routePath = "/hrdash/addtask";
         } else {
           console.error("Unknown role:", role);
           return;

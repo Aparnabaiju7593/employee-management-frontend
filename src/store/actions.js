@@ -20,6 +20,7 @@ export default{
             commit("setRole", res.data.role);
             commit("setdepartmentId", res.data.departmentId);
             commit("setemployeeId", res.data.id);
+            commit("setname", res.data.name);
             return res;
           } catch (error) {
             console.error("Login Error:", error);

@@ -123,7 +123,10 @@ import axios from 'axios';
     try{
       const result = await this.$store.dispatch("allstatus");
       if(result && result.success && Array.isArray(result.data)){
-        this.viewstatuslist = result.data;
+        this.viewstatuslist = result.data.filter(status => 
+        status.statusId === 2 || status.statusId === 3
+      );
+       
         console.log("status:",this.viewstatuslist);
       }else{
         alert("status not found");

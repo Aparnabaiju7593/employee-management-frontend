@@ -122,6 +122,10 @@ export default {
       try{
       const response = await this.$store.dispatch("reqResource",payload);
       alert("request added",response.data)
+       this.resource = "";
+        this.quantity= "";
+       this.reason = "";
+       this.date = "";
     }catch(error){
       console.error("error fetching resource list:",error);
       

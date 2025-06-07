@@ -25,7 +25,7 @@
           <td>{{ request.reason }}</td>
           <td>{{request.status }}</td>
           
-          <td>{{request.submittedTime }}</td>
+          <td>{{ formatDateAndTime(request.submittedTime) }}</td>
         </tr>
       </tbody>
     </table>
@@ -51,6 +51,17 @@ export default {
   
 
   methods: {
+    formatDateAndTime(datetimeString) {
+    if (!datetimeString) return "";
+
+    // Split at 'T' and keep the date and time parts
+    const [datePart, timePart] = datetimeString.split("T");
+    const [year, month, day] = datePart.split("-");
+    const [hour, minute] = timePart.split(":");
+
+    return `${day}/${month}/${year} ${hour}:${minute}`;
+  }
+,
     async fetchLate(){
       const response = await axios.get(`http://localhost:8085/api/departmentadetails/getAllLateDto`)
       this.lateRequests = response.data;

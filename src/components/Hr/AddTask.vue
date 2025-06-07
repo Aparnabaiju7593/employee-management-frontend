@@ -17,26 +17,13 @@
           required
         ></v-select>
 
-        <!-- <v-menu v-model="menu" :close-on-content-click="false" transition="scale-transition" offset-y>
-          <template v-slot:activator="{ on, attrs }">
-            <v-text-field
-              v-model="newTask.startDate"
-              label="Start Date"
-              readonly
-              v-bind="attrs"
-              v-on="on"
-            ></v-text-field>
-          </template>
-          <v-date-picker v-model="newTask.startDate" @input="menu = false"></v-date-picker>
-        </v-menu> -->
-
-        <v-btn color="primary" type="submit">Add Task</v-btn>
+        <v-btn color="primary" type="submit" class="mt-3">Add Task</v-btn>
       </v-form>
 
       <v-divider class="my-6"></v-divider>
 
       <!-- View Tasks -->
-      <h3>Task List</h3>
+      <h3 class="text-h5 mb-4 font-weight-bold text-primary">Task List</h3>
       <v-row>
         <v-col
           v-for="task in tasks"
@@ -45,11 +32,28 @@
           sm="6"
           md="4"
         >
-          <v-card class="mb-3" elevation="2">
-            <v-card-title>{{ task.taskName }}</v-card-title>
-            <v-card-subtitle>Start Date: {{ formatDate(task.startDate) }}</v-card-subtitle>
-            <v-card-text>{{ task.description }}</v-card-text>
-            <v-chip class="ma-2" color="info">{{ task.status }}</v-chip>
+          <v-card class="task-card" elevation="4">
+            <v-card-title class="headline font-weight-bold text-primary">
+              {{ task.taskName }}
+            </v-card-title>
+
+            <v-card-subtitle class="text--secondary d-flex align-center">
+              <v-icon small class="mr-1 text-grey">mdi-calendar-start</v-icon>
+              Employee: {{ task.employee }}
+            </v-card-subtitle>
+
+            <v-card-subtitle class="text--secondary d-flex align-center">
+              <v-icon small class="mr-1 text-grey">mdi-calendar-start</v-icon>
+              Start Date: {{ formatDate(task.startDate) }}
+            </v-card-subtitle>
+
+
+            <v-card-text>
+              <div class="mb-3">{{ task.description }}</div>
+              <v-chip class="status-chip" :color="getStatusColor(task.status)" dark>
+                {{ task.status }}
+              </v-chip>
+            </v-card-text>
           </v-card>
         </v-col>
       </v-row>
@@ -72,7 +76,7 @@ export default {
         taskName: "",
         description: "",
         startDate: "",
-        statusId: 1, // Pending by default
+        statusId: 1, // Default to pending
         employeeId: null
       }
     };
@@ -81,12 +85,11 @@ export default {
     this.fetchTasks();
     this.fetchEmployees();
   },
-  computed:{
-    ...mapGetters([" getdepartmentId"])
+  computed: {
+    ...mapGetters(["getdepartmentId"])
   },
   methods: {
     async fetchTasks() {
-        
       try {
         const response = await axios.get("http://localhost:8085/api/departmentadetails/getTaskDto");
         this.tasks = response.data;
@@ -95,26 +98,23 @@ export default {
       }
     },
 
-     logSelectedEmployee(employeeId) {
-    console.log("Selected Employee ID:", employeeId);
-  },
-
     async fetchEmployees() {
-      let departmentId = this.getDepartmentId;
+      let departmentId = this.getdepartmentId;
 
-  if (!departmentId) {
-    departmentId = JSON.parse(sessionStorage.getItem('departmentId'));
-    console.warn('Using departmentId from sessionStorage:', departmentId);
-  }
+      if (!departmentId) {
+        departmentId = JSON.parse(sessionStorage.getItem('departmentId'));
+        console.warn('Using departmentId from sessionStorage:', departmentId);
+      }
 
-  if (!departmentId) {
-    console.error("Department ID is still undefined. Cannot fetch resources.");
-    return;
-  }
+      if (!departmentId) {
+        console.error("Department ID is still undefined. Cannot fetch resources.");
+        return;
+      }
+
       try {
         const response = await axios.get(`http://localhost:8085/api/departmentadetails/listEmployeesbyhr?departmentId=${departmentId}`);
         this.viewemployeelist = response.data;
-        console.log("employee",response.data);
+        console.log("employee", response.data);
       } catch (error) {
         console.error("Error fetching employees:", error);
       }
@@ -123,18 +123,38 @@ export default {
     async addTask() {
       try {
         await axios.post("http://localhost:8085/api/departmentadetails/addTask", this.newTask);
-        this.newTask.taskName = "";
-        this.newTask.description = "";
-        this.newTask.startDate = "";
-        this.newTask.employeeId = null;
-        this.fetchTasks(); // Refresh task list
+        this.newTask = {
+          taskName: "",
+          description: "",
+          startDate: "",
+          statusId: 1,
+          employeeId: null
+        };
+        this.fetchTasks(); // Refresh list
       } catch (error) {
         console.error("Error adding task:", error);
       }
     },
 
+    logSelectedEmployee(employeeId) {
+      console.log("Selected Employee ID:", employeeId);
+    },
+
     formatDate(date) {
       return date ? new Date(date).toLocaleDateString() : "N/A";
+    },
+
+    getStatusColor(status) {
+      switch (status?.toLowerCase()) {
+        case "pending":
+          return "orange";
+        case "completed":
+          return "green";
+        case "in progress":
+          return "blue";
+        default:
+          return "grey";
+      }
     }
   }
 };
@@ -142,6 +162,25 @@ export default {
 
 <style scoped>
 .v-container {
-  max-width: 900px;
+  max-width: 960px;
+  margin: auto;
+}
+
+.task-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.task-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.status-chip {
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 12px;
+  border-radius: 8px;
 }
 </style>

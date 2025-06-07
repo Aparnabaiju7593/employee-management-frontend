@@ -3,7 +3,11 @@
     <div class="container">
       <h2 class="title">Employee Details</h2>
 
-      <v-card v-for="employee in employees" :key="employee.employeeId" class="mb-4 pa-4">
+      <v-card
+        v-for="employee in employees"
+        :key="employee.employeeId"
+        class="mb-4 pa-4"
+      >
         <v-row>
           <!-- Employee Image -->
           <v-col cols="12" md="3" class="text-center">
@@ -20,20 +24,53 @@
           <v-col cols="12" md="9">
             <v-list dense>
               <v-list-item>
+                
+
                 <v-list-item-content>
-                  <v-list-item-title><strong>Name:</strong> {{ employee.name }}</v-list-item-title>
-                  <v-list-item-subtitle><strong>Email:</strong> {{ employee.email }}</v-list-item-subtitle>
-                  <v-list-item-subtitle><strong>Phone:</strong> {{ employee.phnno }}</v-list-item-subtitle>
-                  <v-list-item-subtitle><strong>Department:</strong> {{ employee.departmentName }}</v-list-item-subtitle>
-                  <v-list-item-subtitle><strong>Designation ID:</strong> {{ employee.designationId }}</v-list-item-subtitle>
-                  <v-list-item-subtitle><strong>Role ID:</strong> {{ employee.roleId }}</v-list-item-subtitle>
-                  <v-list-item-subtitle><strong>Join Date:</strong> {{ formatDate(employee.joinDate) }}</v-list-item-subtitle>
+                  
+                  <v-list-item-title
+                    ><strong>Name:</strong>
+                    {{ employee.name }}</v-list-item-title
+                  >
+                  <v-list-item-subtitle
+                    ><strong>Email:</strong>
+                    {{ employee.email }}</v-list-item-subtitle
+                  >
+                  <v-list-item-subtitle
+                    ><strong>Phone:</strong>
+                    {{ employee.phnno }}</v-list-item-subtitle
+                  >
+                  <v-list-item-subtitle
+                    ><strong>Department:</strong>
+                    {{ employee.departmentName }}</v-list-item-subtitle
+                  >
+                  <v-list-item-subtitle
+                    ><strong>Designation :</strong>
+                    {{ employee.designationName }}</v-list-item-subtitle
+                  >
+                  <v-list-item-subtitle
+                    ><strong>Join Date:</strong>
+                    {{ formatDate(employee.joinDate) }}</v-list-item-subtitle
+                  >
+                  <v-list-item-title
+                  ><strong>Role :</strong> {{ employee.role }}
+                  <v-btn
+                    color="green"
+                    @click="updateRole(employee)"
+                    class="mt-2 text-white"
+                    small
+                  >
+                    Change Role
+                  </v-btn>
+                </v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
             </v-list>
 
             <div class="text-right mt-2">
-              <v-btn color="primary" @click="openDialog(employee)">Set Designation</v-btn>
+              <v-btn color="primary" @click="openDialog(employee)"
+                >Set Designation</v-btn
+              >
             </div>
           </v-col>
         </v-row>
@@ -44,13 +81,13 @@
         <v-card>
           <v-card-title>Set Designation</v-card-title>
           <v-card-text>
-            <v-select 
+            <v-select
               v-model="selectedDesignationId"
               :items="viewdesignationlist"
               color="primary"
               label="Designation Name"
               variant="underlined"
-              item-title="designationName"   
+              item-title="designationName"
               item-value="designationId"
               required
             ></v-select>
@@ -86,7 +123,9 @@ export default {
   methods: {
     async fetchEmployees() {
       try {
-        const response = await axios.get("http://localhost:8085/api/AdminDetails/listEmployees");
+        const response = await axios.get(
+          "http://localhost:8085/api/AdminDetails/listEmployees"
+        );
         this.employees = response.data;
       } catch (error) {
         console.error("Failed to fetch employees:", error);
@@ -109,6 +148,7 @@ export default {
       this.selectedDesignationId = employee.designationId;
       this.dialog = true;
     },
+
     async updateDesignation() {
       try {
         const response = await axios.put(
@@ -134,6 +174,27 @@ export default {
         alert("Error updating designation");
       }
     },
+    async updateRole(employee) {
+      const confirmed = confirm(`Are you sure you want to change the role of ${employee.name} to HR?`);
+  if (!confirmed) return;
+      try {
+        const employeeId=employee.employeeId;
+        const response = await axios.put(
+          `http://localhost:8085/api/EmployeeDetails/updaterole?employeeId=${employeeId}`,
+          
+        );
+
+        if (response.status === 200) {
+          alert("Role Changed To HR!");
+          this.fetchEmployees();
+        } else {
+          alert("Failed to update role");
+        }
+      } catch (error) {
+        console.error("Failed to update role:", error);
+        alert("Error updating role");
+      }
+    },
     formatDate(date) {
       return new Date(date).toLocaleDateString();
     },
@@ -155,5 +216,12 @@ export default {
 .rounded {
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+#rolrbtn {
+  height: 30px;
+  width: 115px;
+  background-color: green;
+  color: white;
+  border-radius: 10px;
 }
 </style>

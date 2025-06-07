@@ -11,6 +11,8 @@
           <th class="border p-2">Resource </th>
           <th class="border p-2">Department ID</th>
           <th class="border p-2">Quantity</th>
+          <th class="border p-2">Available Quantity</th>
+
           <th class="border p-2">Reason</th>
           <th class="border p-2">Request Date</th>
           <th class="border p-2">Approval Date</th>
@@ -26,6 +28,7 @@
           <td class="border p-2 text-center">{{ req.resource }}</td>
            <td class="border p-2 text-center">{{ req.departmentId }}</td>
           <td class="border p-2 text-center">{{ req.quantity }}</td>
+          <td class="border p-2 text-center">{{ req.availablequantity }}</td>
           <td class="border p-2 text-center">{{ req.reason }}</td>
           <td class="border p-2 text-center">{{ req.requestDate }}</td>
           <td class="border p-2 text-center">
@@ -33,7 +36,7 @@
 
           </td>
           <td class="border p-2 text-center">{{ req.status }}</td>
-          <td class="border p-2 text-center"> <button @click="openEditDialog(req)">edit</button>
+          <td class="border p-2 text-center"> <button id="button" @click="openEditDialog(req)">edit</button>
 </td>
           
         </tr>
@@ -55,6 +58,13 @@
           item-value="statusId">
 
                  </v-select>
+                  <v-text-field
+          v-model="adminedited.remarks"
+          color="primary"
+          label="Remarks"
+          placeholder="Enter your remark for resource"
+          variant="underlined"
+        ></v-text-field>
               </v-card-text>
               <v-card-actions>
                 <v-btn @click="editDialog = false">Cancel</v-btn>
@@ -117,7 +127,7 @@ export default {
     async updateRequest() {
   try {
     const response = await axios.put(
-      `http://localhost:8085/api/departmentadetails/addApprovals?employeeId=${this.adminedited.employeeId}&statusId=${this.adminedited.statusId}&reqResourceId=${this.adminedited.reqResourceId}`
+      `http://localhost:8085/api/departmentadetails/addApprovals?employeeId=${this.adminedited.employeeId}&statusId=${this.adminedited.statusId}&remarks=${this.adminedited.remarks}&reqResourceId=${this.adminedited.reqResourceId}`
     );
 
     const index = this.reqResources.findIndex(v => v.reqResourceId === response.data.reqResourceId);
@@ -133,8 +143,11 @@ export default {
 },async viewstatus() {
     try{
       const result = await this.$store.dispatch("allstatus");
+      //status
       if(result && result.success && Array.isArray(result.data)){
-        this.viewstatuslist = result.data;
+        this.viewstatuslist = result.data.filter(status => 
+        status.statusId === 2 || status.statusId === 3
+      );
         console.log("status:",this.viewstatuslist);
       }else{
         alert("status not found");
@@ -156,5 +169,12 @@ export default {
 <style scoped>
 table {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+#button{
+  width: 100px;
+  height: 40px;
+  background-color: brown;
+  border-radius: 10px;
+  color: white;
 }
 </style>

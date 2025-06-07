@@ -22,6 +22,8 @@
           color="primary"
           label="Late Date"
           type="date"
+          :min="minDate"
+
           variant="underlined"
           required
         ></v-text-field>
@@ -69,7 +71,8 @@ export default {
       lateDate: "",
       reason: "",
       submittedTime: this.getCurrentTimestamp(),
-      departments: []
+      departments: [],
+      minDate: new Date().toISOString().split("T")[0]
     };
   },
   mounted() {
@@ -115,6 +118,9 @@ export default {
       try {
         const response = await this.$store.dispatch("submitLateRequest", payload);
         alert("Late request submitted successfully!");
+
+         this.lateDate = "";
+         this.reason = "";
         console.log(response);
       } catch (error) {
         console.error("Error submitting late request:", error);
