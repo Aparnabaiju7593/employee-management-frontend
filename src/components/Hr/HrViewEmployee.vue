@@ -38,10 +38,10 @@
                     <strong>Department:</strong> {{ employee.departmentName }}
                   </v-list-item-subtitle>
                   <v-list-item-subtitle>
-                    <strong>Designation ID:</strong> {{ employee.designationId }}
+                    <strong>Designation :</strong> {{ employee.designationName }}
                   </v-list-item-subtitle>
                   <v-list-item-subtitle>
-                    <strong>Role ID:</strong> {{ employee.roleId }}
+                    <strong>Role :</strong> {{ employee.role }}
                   </v-list-item-subtitle>
                   <v-list-item-subtitle>
                     <strong>Join Date:</strong> {{ formatDate(employee.joinDate) }}

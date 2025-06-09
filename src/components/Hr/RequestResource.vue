@@ -170,11 +170,40 @@ export default {
 table {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-#button{
+
+
+ #button {
   width: 100px;
   height: 40px;
-  background-color: brown;
-  border-radius: 10px;
+  background-color: #0f60e2; /* dark red */
+  border-radius: 8px;
   color: white;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
+
+#button:hover {
+  background-color: #a30000;
+  transform: scale(1.05);
+}
+
+#button:active {
+  background-color: #660000;
+  transform: scale(0.98);
+}
+tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
+tbody tr:hover {
+  background-color: #e6eeee;
+}
+
 </style>

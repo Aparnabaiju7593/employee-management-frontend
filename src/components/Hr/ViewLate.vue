@@ -168,7 +168,7 @@ export default {
   padding: 20px;
   background: #fff;
   border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(82, 3, 241, 0.955);
 }
 
 .title {
@@ -212,4 +212,26 @@ export default {
   color: green;
   font-weight: bold;
 }
+.late-table button {
+  padding: 8px 16px;
+  background-color:  #007bff; /* Soft purple for visibility */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.late-table button:hover {
+  background-color:#b81397;
+  transform: scale(1.05);
+}
+
+.late-table button:active {
+  background-color:#631e7e;
+  transform: scale(0.95);
+}
+
 </style>

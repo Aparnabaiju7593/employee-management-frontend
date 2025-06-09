@@ -148,7 +148,7 @@ import axios from 'axios';
     padding: 20px;
     background: #fff;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(82, 3, 241, 0.955);
   }
   
   .title {
@@ -192,5 +192,27 @@ import axios from 'axios';
     color: green;
     font-weight: bold;
   }
+  .leave-table button {
+  padding: 8px 14px;
+  background-color: #0f65cf; /* Green for visibility and approval action */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.leave-table button:hover {
+  background-color: #b81397;
+  transform: scale(1.05);
+}
+
+.leave-table button:active {
+  background-color: #631e7e;
+  transform: scale(0.95);
+}
+
   </style>
   
